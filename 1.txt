@@ -81,10 +81,10 @@ void display()
 void main()
 {
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-		glutInitWindowPosition(100, 100); 
-		glutInitWindowSize(500, 500); 
-		glutCreateWindow("Bresenham's Line DrawingAlgorthm");
-			myinit();
+	glutInitWindowPosition(100, 100); 
+	glutInitWindowSize(500, 500); 
+	glutCreateWindow("Bresenham's Line DrawingAlgorthm");
+	myinit();
 	printf("Enter co-ordinates of first point: ");
 	scanf_s("%d %d", &xx, &yy);
 	printf("Enter co-ordinates of second point: ");
