@@ -33,11 +33,9 @@ void reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	if (w <= h)
-		glFrustum(2, 2, 2 * (GLfloat)h / (GLfloat)w,
-			2 * (GLfloat)h / (GLfloat)w, 2, 20);
+		glFrustum(2, 2, 2 * (GLfloat)h / (GLfloat)w,2 * (GLfloat)h / (GLfloat)w, 2, 20);
 	else
-		glFrustum(2 * (GLfloat)h / (GLfloat)w,
-			2 * (GLfloat)h / (GLfloat)w, -2, 2, 2, 20);
+		glFrustum(2 * (GLfloat)h / (GLfloat)w,2 * (GLfloat)h / (GLfloat)w, -2, 2, 2, 20);
 	glMatrixMode(GL_MODELVIEW);
 }
 void mousefunc(int button, int status, int x, int y)
