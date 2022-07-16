@@ -1,115 +1,107 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<conio.h>
-#include<math.h>
 #include<GL/glut.h>
-void myinit()
+void teapot(GLfloat x,GLfloat y,GLfloat z)
 {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-100, 200, -100, 200, -200, 200);
-	glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glutSolidTeapot(0.1);
+    glPopMatrix();
 }
-void drawtable()
+void tableTop(GLfloat x, GLfloat y, GLfloat z)
 {
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glScalef(0.6, 0.02, 0.5);
+    glutSolidCube(1);
+    glPopMatrix();
+}
+void tableLeg(GLfloat x, GLfloat y, GLfloat z)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glScalef(0.02, 0.3, 0.02);
+    glutSolidCube(1);
+    glPopMatrix();
+}
+void wall(GLfloat x, GLfloat y, GLfloat z)
+{
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glScalef(1, 1, 0.02);
+    glutSolidCube(1);
+    glPopMatrix();
+}
+void light()
+{
+    GLfloat mat_ambient[]  =  {1, 1, 1, 1};
+    GLfloat mat_diffuse[]  =  {0.5, 0.5, 0.5, 1};
+    GLfloat mat_specular[]  =  {1, 1, 1, 1};
+    GLfloat mat_shininess[]  =  {50.0f};
 
-	glPushMatrix();
-	glColor3f(0, 1, 0);
-	glTranslatef(50, 40, -50);
-	glScalef(50, 5, 50);
-	glutSolidCube(1);
-	glPopMatrix();
-	
-	glPushMatrix();
-	glColor3f(1, 1, 0);
-	glTranslatef(30, 20, -30);
-	glScalef(5, 35, 5);
-	glutSolidCube(1);
-	glPopMatrix();
-	glPushMatrix();
-	glColor3f(1, 1, 0);
-	glTranslatef(70, 20, -30);
-	glScalef(5, 35, 5);
-	glutSolidCube(1);
-	glPopMatrix();
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-	glPushMatrix();
-	glColor3f(1, 1, 0);
-	glTranslatef(30, 20, -70);
-	glScalef(5, 35, 5);
-	glutSolidCube(1);
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor3f(1, 1, 0);
-	glTranslatef(70, 20, -70);
-	glScalef(5, 35, 5);
-	glutSolidCube(1);
-	glPopMatrix();
-	
-	glPushMatrix();
-	glColor3f(1, 0, 1);
-	glTranslatef(50, 0, -50);
-	glScalef(100, 5, 100);
-	glutSolidCube(1);
-	glPopMatrix();
-	
-	glPushMatrix();
-	glColor3f(1, 0, 0);
-	glRotatef(90, 0, 0, 1);
-	glTranslatef(50, 0, -50);
-	glScalef(100, 5, 100);
-	glutSolidCube(1);
-	glPopMatrix();
-	
-	glPushMatrix();
-	glColor3f(1, 0, 0);
-	glTranslatef(50, 50, -100);
-	glScalef(100, 100, 5);
-	glutSolidCube(1);
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(50, 50, -50);
-	glRotatef(30, 0, 1, 0);
-	glutSolidTeapot(10);
-	glPopMatrix();
+    GLfloat light_position[]  =  {2, 6, 3, 1};
+    GLfloat light_intensity[]  =  {0.7, 0.7, 0.7, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_intensity);
 }
 void display()
 {
-	glClearColor(0, 0, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	GLfloat mat_ambient[] = { .7,.7,.7,1 };
-	GLfloat mat_diffuse[] = { .5,.5,.5,1 };
-	GLfloat mat_spec[] = { 1,1,1,1 };
-	GLfloat mat_shininess[] = { 50 };
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_spec);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	GLfloat light_int[] = { .7,.7,.7,1 };
-	GLfloat lightpos[] = { 100,100,100 };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_int);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(25, 25, 50, 0, 0, -25, 0, 1, 0);
-	glMatrixMode(GL_MODELVIEW);
-	drawtable();
-	glFlush();
+    GLfloat teapotP = -0.07, tabletopP = -0.15, tablelegP = 0.2, wallP = 0.5;
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    gluLookAt(-2, 2, 5, 0, 0, 0,  0, 1, 0);
+
+    light(); //Adding light source to your project
+
+    teapot(0, teapotP, 0); //Create teapot
+
+    tableTop(0, tabletopP, 0); //Create tableâ€™s top
+
+    tableLeg(tablelegP, -0.3, tablelegP); //Create 1st leg
+    tableLeg(-tablelegP, -0.3, tablelegP); //Create 2nd leg
+    tableLeg(-tablelegP, -0.3, -tablelegP); //Create 3rd leg
+    tableLeg(tablelegP, -0.3, -tablelegP); //Create 4th leg
+
+    wall(0, 0, -wallP); //Create 1st wall
+    glRotatef(90, 1, 0, 0);
+
+    wall(0, 0, wallP); //Create 2nd wall
+    glRotatef(90, 0, 1, 0);
+
+    wall(0, 0, wallP); //Create 3rd wall
+    glFlush();
 }
-void main()
+void myinit()
 {
-	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	glutInitWindowSize(500, 500);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Scene");
-	myinit();
-	glutDisplayFunc(display);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_DEPTH_TEST);
-	glutMainLoop();
+    glClearColor(0, 0, 0, 1);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-1, 1, -1, 1, -1, 10);
+    glMatrixMode(GL_MODELVIEW);
+}
+int main(int argc, char **argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB|GLUT_DEPTH);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(0, 0);
+    glutCreateWindow("Teapot on a table");
+
+    myinit();
+
+    glutDisplayFunc(display);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glShadeModel(GL_SMOOTH);
+
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_DEPTH_TEST);
+
+    glutMainLoop();
 }
